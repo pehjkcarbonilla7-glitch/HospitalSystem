@@ -8,6 +8,7 @@ import java.util.Scanner;
 import java.util.Queue;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.*;
 /**
  *
  * @author Jaycee Kristine
@@ -15,7 +16,7 @@ import java.util.List;
 
 
 public class HospitalSystem {
-   // shared application lists/queues
+    // shared application lists/queues
     public static final Scanner scanner = new Scanner(System.in);
     public static final List<Person> patients = new ArrayList<>();
     public static final QueueManager queueManager = new QueueManager();
@@ -26,7 +27,17 @@ public class HospitalSystem {
     // patient ID auto-increment
     private static int patientCounter = 1;
 
+    // hardcoded login credentials
+    private static final String USERNAME = "admin";
+    private static final String PASSWORD = "1234";
+
     public static void main(String[] args) {
+
+        if (!login()) {
+            System.out.println("Login failed. Exiting program.");
+            return;
+        }
+
         while (true) {
             clearScreen();
             printLine();
@@ -82,6 +93,32 @@ public class HospitalSystem {
         }
     }
 
+    // LOGIN METHOD
+    public static boolean login() {
+        clearScreen();
+        printLine();
+        System.out.println(" HOSPITAL SYSTEM LOGIN");
+        printLine();
+
+        int attempts = 3; // allow 3 login attempts
+        while (attempts > 0) {
+            System.out.print("Username: ");
+            String user = scanner.nextLine().trim();
+            System.out.print("Password: ");
+            String pass = scanner.nextLine().trim();
+
+            if (USERNAME.equals(user) && PASSWORD.equals(pass)) {
+                System.out.println("Login successful!");
+                pause();
+                return true;
+            } else {
+                attempts--;
+                System.out.println("Invalid credentials. Attempts left: " + attempts);
+            }
+        }
+        return false;
+    }
+
     // small utilities
     public static int getIntInput() {
         while (true) {
@@ -99,7 +136,7 @@ public class HospitalSystem {
     }
 
     public static void printLinesingle() {
-       System.out.println("----------------------------------------");
+        System.out.println("----------------------------------------");
     }
 
     public static void pause() {
