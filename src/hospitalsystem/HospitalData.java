@@ -4,6 +4,9 @@
  */
 package hospitalsystem;
 import java.util.*;
+import java.time.LocalDate;
+import java.time.Period;
+
 /**
  *
  * @author Jaycee Kristine
@@ -28,23 +31,35 @@ public class HospitalData {
         System.out.print("Last Name: ");
         String lname = scanner.nextLine().trim();
 
-        int age = 0;
-        while (true) {
-            System.out.print("Age: ");
-            try {
-                age = Integer.parseInt(scanner.nextLine().trim());
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("Enter a valid age (number).");
-            }
-        }
+      // --- Birthdate with automatic age calculation ---
+int year, month, day;
+while (true) {
+    try {
+        System.out.print("Birth Year (YYYY): ");
+        year = Integer.parseInt(scanner.nextLine().trim());
+
+        System.out.print("Birth Month (1-12): ");
+        month = Integer.parseInt(scanner.nextLine().trim());
+
+        System.out.print("Birth Day (1-31): ");
+        day = Integer.parseInt(scanner.nextLine().trim());
+
+        break;
+    } catch (Exception e) {
+        System.out.println("Invalid input. Try again.");
+    }
+}
+
+LocalDate bdate = LocalDate.of(year, month, day);
+LocalDate today = LocalDate.now();
+int age = Period.between(bdate, today).getYears();
+
+String birthdate = bdate.toString();
 
         System.out.print("Sex (M/F): ");
         String sex = scanner.nextLine().trim();
 
-        System.out.print("Birthdate (e.g. 2025-09-01): ");
-        String birthdate = scanner.nextLine().trim();
-
+      
         System.out.print("Birthplace: ");
         String birthplace = scanner.nextLine().trim();
 

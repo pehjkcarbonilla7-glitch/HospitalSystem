@@ -49,6 +49,7 @@ public class HospitalSystem {
             System.out.println("4. Add Patient (Only when called)");
             System.out.println("5. Patient Management Menu");
             System.out.println("6. Exit");
+            System.out.println("7. Logout");
             printLinesingle();
             System.out.print("Enter your choice: ");
 
@@ -85,6 +86,12 @@ public class HospitalSystem {
                     printLine();
                     return;
                 }
+                case 7 -> {
+                    System.out.println("Logging out...");
+                    login();
+                    return;  // returns to LoginSystem
+}
+
                 default -> {
                     System.out.println("Invalid choice, please try again.");
                     pause();
