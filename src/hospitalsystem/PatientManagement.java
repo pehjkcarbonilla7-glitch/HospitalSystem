@@ -24,22 +24,22 @@ public class PatientManagement {
             System.out.println("5. Manage Medical Records");
             System.out.println("6. Back to Main Menu");
             HospitalSystem.printLinesingle();
-            System.out.print("Enter your choice: ");
-            int choice = HospitalSystem.getIntInput();
+            System.out.print("Enter your choice (shortcut key allowed): ");
+            String input = scanner.nextLine().trim().toUpperCase();
 
-            switch (choice) {
-                case 1 -> viewPatientList(patients);
-                case 2 -> searchPatient(scanner, patients);
-                case 3 -> updatePatient(scanner, patients);
-                case 4 -> deletePatient(scanner, patients);
-                case 5 -> manageRecordsMenu(scanner, patients);
-                case 6 -> { return; }
-                default -> {
-                    System.out.println("Invalid choice.");
-                    HospitalSystem.pause();
-                }
+            switch (input) {
+            case "1", "V" -> viewPatientList(patients);       // V = View Patient List
+            case "2", "S" -> searchPatient(scanner, patients); // S = Search Patient
+            case "3", "U" -> updatePatient(scanner, patients); // U = Update Patient
+            case "4", "D" -> deletePatient(scanner, patients); // D = Delete Patient
+            case "5", "R" -> manageRecordsMenu(scanner, patients); // R = Manage Records
+            case "6", "M" -> { return; }                        // M = Back to Main Menu
+            default -> {
+            System.out.println("Invalid choice.");
+            HospitalSystem.pause();
             }
         }
+    }
     }
 
     // Display table with requested columns

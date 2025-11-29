@@ -51,52 +51,45 @@ public class HospitalSystem {
             System.out.println("6. Exit");
             System.out.println("7. Logout");
             printLinesingle();
-            System.out.print("Enter your choice: ");
+           System.out.print("Enter your choice (shortcut key allowed): ");
+String input = scanner.nextLine().trim().toUpperCase();
 
-            int choice = getIntInput();
-
-            switch (choice) {
-                case 1 -> queueManager.issuePriority(scanner);
-                case 2 -> queueManager.viewQueue();
-                case 3 -> {
-                    PriorityNumber called = queueManager.callNext();
-                    if (called != null) {
-                        lastCalled = called;
-                        System.out.println("\nProceed to registration desk to add patient info (Option 4).");
-                    }
-                    pause();
-                }
-                case 4 -> {
-                    if (lastCalled == null) {
-                        System.out.println("No patient has been called. Call a patient first (Option 3).");
-                        pause();
-                    } else {
-                        // generate ID
-                        String id = String.format("P-%03d", patientCounter++);
-                        HospitalData.addPatient(scanner, patients, id, lastCalled);
-                        lastCalled = null; // reset
-                        pause();
-                    }
-                }
-                case 5 -> PatientManagement.menu(scanner, patients);
-                case 6 -> {
-                    clearScreen();
-                    printLine();
-                    System.out.println(" Exiting system... Goodbye!");
-                    printLine();
-                    return;
-                }
-                case 7 -> {
-                    System.out.println("Logging out...");
-                    login();
-                    return;  // returns to LoginSystem
+switch (input) {
+    case "1", "G" -> queueManager.issuePriority(scanner); // G = Get Priority Number
+    case "2", "V" -> queueManager.viewQueue();            // V = View Queue
+    case "3", "C" -> {                                     // C = Call Next
+        PriorityNumber called = queueManager.callNext();
+        if (called != null) {
+            lastCalled = called;
+            System.out.println("\nProceed to registration desk to add patient info (Option 4).");
+        }
+        pause();
+    }
+    case "4", "A" -> {                                     // A = Add Patient
+        if (lastCalled == null) {
+            System.out.println("No patient has been called. Call a patient first (Option 3).");
+            pause();
+        } else {
+            String id = String.format("P-%03d", patientCounter++);
+            HospitalData.addPatient(scanner, patients, id, lastCalled);
+            lastCalled = null; // reset
+            pause();
+        }
+    }
+    case "5", "M" -> PatientManagement.menu(scanner, patients); // M = Patient Management
+    case "6", "E" -> {                                      // E = Exit
+        clearScreen();
+        printLine();
+        System.out.println(" Exiting system... Goodbye!");
+        printLine();
+        return;
+    }
+    default -> {
+        System.out.println("Invalid choice, please try again.");
+        pause();
+    }
 }
 
-                default -> {
-                    System.out.println("Invalid choice, please try again.");
-                    pause();
-                }
-            }
         }
     }
 
